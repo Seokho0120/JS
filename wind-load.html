@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./test.js" defer></script> <!-- 1번째 -->
+</head>
+<body>
+  
+  <script>
+    // html만 완료되면 호출
+    // 2번째, defer랑 비슷한즘에
+    window.addEventListener('DOMContentLoaded', ()=>{
+      console.log('DOMContentLoaded')
+    })
+
+    // 모든 리소스 다운로드되면 호출(css, image, js)
+    // 3번째
+    window.addEventListener('load', ()=>{
+      console.log('load')
+    })
+
+    // 사용자가 페이지를 나가기 직전에 불려지는 함수
+    // before unload
+    window.addEventListener('beforeunload', ()=>{
+      console.log('beforeunload')
+    })
+
+    // 페이지가 unload 되었을때
+    // resource is being unloaded
+    window.addEventListener('unload', ()=>{
+      console.log('unload')
+    })
+  </script>
+</body>
+</html>
