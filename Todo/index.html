@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./style.css">
-  <script defer src="./main.js"></script>
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <!-- <script defer src="./main.js"></script> -->
+  <link rel="stylesheet" href="./style2.css">
+  <script defer src="./main2.js"></script>
   <title>Todo List</title>
 </head>
 <body>
   <div class="container">
     <h1 class="title">TODO LIST</h1>
-    <ul id="todoList" class="list">
+
+    <ul id="todoList">
       <!-- <li id="list-item" class="list-item">
         <div>todo</div>
         <button>
@@ -21,8 +24,7 @@
         </button>
       </li> -->
     </ul>
-    <input id="todoInput" class="todo-input" onkeydown="keyCodeCheck()" type="text" placeholder="할일을 작성하세요">
-    <p id="values"></p>
+    <input id="todoInput" type="text" placeholder="할일을 작성하세요" autocomplete="off">
 
     <div class="footer">
       <button id="addBtn" class="add-btn">
