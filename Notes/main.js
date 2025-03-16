@@ -1,10 +1,11 @@
 const addBox = document.querySelector(".add-box");
 const popupBox = document.querySelector(".popup-box");
+const popupTitle = popupBox.querySelector("header p");
+
 const closeIcon = popupBox.querySelector("header i");
 const addBtn = popupBox.querySelector("button");
 const titleTag = popupBox.querySelector("input");
 const descTag = popupBox.querySelector("textarea");
-// const popupTitle = popupBox.querySelector("header p")
 
 const months = [
   "January",
@@ -22,14 +23,25 @@ const months = [
 ];
 
 const noteList = JSON.parse(localStorage.getItem("noteList")) || [];
+// FIXME: 현재 코드는 let만 허용됨, const로 바꾸기
+let isEdit = false,
+  updateId;
+// const isEdit = false;
+// const updateId = null;
 
 addBox.addEventListener("click", () => {
+  titleTag.focus();
   popupBox.classList.add("show");
 });
 
 closeIcon.addEventListener("click", () => {
+  isEdit = false;
   titleTag.value = "";
   descTag.value = "";
+
+  addBtn.innerText = "Add Note";
+  popupTitle.innerHTML = "Add a new Note";
+
   popupBox.classList.remove("show");
 });
 
@@ -48,11 +60,11 @@ function getNoteList() {
                       <div class="settings">
                         <i onclick="showMenu(this)" class="fa-solid fa-ellipsis"></i>
                         <ul class="menu">
-                          <li>
+                          <li onclick="editNote(${index}, '${note.title}', '${note.description}')">
                             <i class="fa-solid fa-pen"></i>
                             Edit
                           </li>
-                          <li onclick="deleteNote(${index})" >
+                          <li onclick="deleteNote(${index})">
                             <i class="fa-solid fa-trash"></i>
                             Delete
                           </li>
@@ -77,7 +89,23 @@ function showMenu(el) {
   });
 }
 
+function editNote(noteId, title, desc) {
+  isEdit = true;
+  updateId = noteId;
+
+  addBox.click();
+
+  titleTag.value = title;
+  descTag.value = desc;
+
+  addBtn.innerText = "Edit Note";
+  popupTitle.innerHTML = "Edit a Note";
+}
+
 function deleteNote(noteId) {
+  const confirmDel = confirm("Are you sure you want to delete this note?");
+  if (!confirmDel) return;
+
   noteList.splice(noteId, 1); // 삭제
   localStorage.setItem("noteList", JSON.stringify(noteList)); // 로컬스토리지에 저장
   getNoteList(); // 삭제하고 로컬스토리지에 있는거 보여주기
@@ -106,8 +134,13 @@ addBtn.addEventListener("click", (e) => {
       description: noteDesc,
       date: `${month} ${day}, ${year} ${formattedTime}`,
     };
+    if (!isEdit) {
+      noteList.push(noteForm); // 새로운 노트 추가
+    } else {
+      isEdit = false;
+      noteList[updateId] = noteForm; // 특정 아이디에 노트 업데이트
+    }
 
-    noteList.push(noteForm);
     localStorage.setItem("noteList", JSON.stringify(noteList));
     closeIcon.click();
     getNoteList();
