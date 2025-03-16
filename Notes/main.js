@@ -22,19 +22,20 @@ const months = [
 ];
 
 const noteList = JSON.parse(localStorage.getItem("noteList")) || [];
-// console.log("noteList >>>> ", noteList);
 
 addBox.addEventListener("click", () => {
   popupBox.classList.add("show");
 });
 
 closeIcon.addEventListener("click", () => {
+  titleTag.value = "";
+  descTag.value = "";
   popupBox.classList.remove("show");
 });
 
 function getNoteList() {
-  noteList.forEach((note) => {
-    console.log("note", note);
+  document.querySelectorAll(".note").forEach((note) => note.remove()); // TODO: 왜?
+  noteList.forEach((note, index) => {
     const liTag = `<li class="note">
                     <div class="details">
                       <p>${note.title}</p>
@@ -45,13 +46,13 @@ function getNoteList() {
                     <div class="bottom-content">
                       <span>${note.date}</span>
                       <div class="settings">
-                        <i class="fa-solid fa-ellipsis"></i>
+                        <i onclick="showMenu(this)" class="fa-solid fa-ellipsis"></i>
                         <ul class="menu">
                           <li>
                             <i class="fa-solid fa-pen"></i>
                             Edit
                           </li>
-                          <li>
+                          <li onclick="deleteNote(${index})" >
                             <i class="fa-solid fa-trash"></i>
                             Delete
                           </li>
@@ -65,6 +66,22 @@ function getNoteList() {
   });
 }
 getNoteList();
+
+function showMenu(el) {
+  el.parentElement.classList.add("show");
+
+  document.addEventListener("click", (e) => {
+    if (e.target.tagName != "I" || e.target != el) {
+      el.parentElement.classList.remove("show");
+    }
+  });
+}
+
+function deleteNote(noteId) {
+  noteList.splice(noteId, 1); // 삭제
+  localStorage.setItem("noteList", JSON.stringify(noteList)); // 로컬스토리지에 저장
+  getNoteList(); // 삭제하고 로컬스토리지에 있는거 보여주기
+}
 
 addBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -84,17 +101,15 @@ addBtn.addEventListener("click", (e) => {
       minutes < 10 ? "0" : ""
     }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-    console.log("formattedTime", formattedTime);
-
     const noteForm = {
       title: noteTitle,
       description: noteDesc,
       date: `${month} ${day}, ${year} ${formattedTime}`,
     };
 
-    // const noteList = [];
     noteList.push(noteForm);
     localStorage.setItem("noteList", JSON.stringify(noteList));
     closeIcon.click();
+    getNoteList();
   }
 });

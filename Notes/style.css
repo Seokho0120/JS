@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -8,13 +8,14 @@ body {
   background: #626cd6;
 }
 
-button{
+button {
   outline: none;
   border: none;
   cursor: pointer;
 }
 
-textarea, input {
+textarea,
+input {
   outline: none;
 }
 
@@ -42,8 +43,7 @@ textarea, input {
 .bottom-content,
 .popup,
 header,
-.settings
-.menu li {
+.settings .menu li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -130,14 +130,9 @@ header,
   transition: transform 0.2s ease;
 }
 
-.settings:hover .menu {
+.settings.show .menu {
   transform: scale(1);
 }
-
-/* 나중에 show로 보여주기 */
-/* .settings.show .menu {
-  transform: scale(1);
-} */
 
 .settings .menu li {
   height: 25px;
@@ -185,13 +180,15 @@ header,
 }
 
 /* .popup-box{ */
-.popup-box, .popup-box .popup {
+.popup-box,
+.popup-box .popup {
   opacity: 0;
   pointer-events: none;
   transition: all 0.25s ease;
 }
 
-.popup-box.show, .popup-box.show .popup {
+.popup-box.show,
+.popup-box.show .popup {
   opacity: 1;
   pointer-events: auto;
 }
@@ -203,17 +200,17 @@ header,
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.popup .content header{
+.popup .content header {
   padding: 15px 25px;
   border-bottom: 1px solid #ccc;
 }
 
-.content header p{
+.content header p {
   font-size: 20px;
   font-weight: 500;
 }
 
-.content header i{
+.content header i {
   color: #8b8989;
   cursor: pointer;
   font-size: 23px;
@@ -243,7 +240,7 @@ form .row label {
   border: 1px solid #999;
 }
 
-.content form textarea{
+.content form textarea {
   height: 150px;
   resize: none;
   padding: 8px 15px;
@@ -255,5 +252,5 @@ form .row label {
   color: #fff;
   font-size: 17px;
   border-radius: 4px;
-  background: #626CD6;
+  background: #626cd6;
 }
