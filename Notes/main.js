@@ -1,3 +1,5 @@
+// TODO: https://www.youtube.com/watch?v=AkIUtUWpyZs 참고
+
 const addBox = document.querySelector(".add-box");
 const popupBox = document.querySelector(".popup-box");
 const popupTitle = popupBox.querySelector("header p");
@@ -23,11 +25,13 @@ const months = [
 ];
 
 const noteList = JSON.parse(localStorage.getItem("noteList")) || [];
-// FIXME: 현재 코드는 let만 허용됨, const로 바꾸기
-let isEdit = false,
-  updateId;
-// const isEdit = false;
-// const updateId = null;
+let isEdit = false;
+let updateId = null;
+
+// const editState = {
+//   isEdit: false,
+//   updateId: null,
+// }; // 객체로 상태 관리
 
 addBox.addEventListener("click", () => {
   titleTag.focus();
@@ -36,6 +40,7 @@ addBox.addEventListener("click", () => {
 
 closeIcon.addEventListener("click", () => {
   isEdit = false;
+  // editState.isEdit = false;
   titleTag.value = "";
   descTag.value = "";
 
@@ -93,6 +98,9 @@ function editNote(noteId, title, desc) {
   isEdit = true;
   updateId = noteId;
 
+  // editState.isEdit = true;
+  // editState.updateId = noteId;
+
   addBox.click();
 
   titleTag.value = title;
@@ -134,12 +142,20 @@ addBtn.addEventListener("click", (e) => {
       description: noteDesc,
       date: `${month} ${day}, ${year} ${formattedTime}`,
     };
+
     if (!isEdit) {
       noteList.push(noteForm); // 새로운 노트 추가
     } else {
       isEdit = false;
       noteList[updateId] = noteForm; // 특정 아이디에 노트 업데이트
     }
+
+    // if (!editState.isEdit) {
+    //   noteList.push(noteForm); // 새로운 노트 추가
+    // } else {
+    //   noteList[editState.updateId] = noteForm; // 특정 아이디에 노트 업데이트
+    //   editState.isEdit = false;
+    // }
 
     localStorage.setItem("noteList", JSON.stringify(noteList));
     closeIcon.click();
