@@ -113,17 +113,17 @@ body {
   transform: scale(1.1);
 }
 
-.items {
+.item-container {
   display: flex;
   height: 100vh;
 }
 
-.items ul {
+.item-list {
   z-index: 1;
 }
 
-.items img {
-  max-width: 200px;
+.item-img {
+  width: 200px;
   height: auto;
 }
 
