@@ -9,11 +9,13 @@ const itemList = document.querySelector(".game-field");
 const timer = document.querySelector(".game-timer");
 const popup = document.querySelector(".popup");
 const replayBtn = document.querySelector(".replay-btn");
+const messageText = document.querySelector(".message-text");
 
 let isPlay = false;
 let remainingTime = 10; // 초기 시간
 let countdown = undefined;
 let isPopup = false;
+let isWin = false;
 
 playBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -31,7 +33,6 @@ playBtn.addEventListener("click", (e) => {
     stopTimer();
     playBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
     playBtn.disabled = true;
-
     showPopup();
   }
 });
@@ -45,7 +46,7 @@ function startTimer() {
       timer.textContent = remainingTime;
     } else {
       clearInterval(countdown);
-      replayGame();
+      showResult();
     }
   }, 1000);
 }
@@ -77,9 +78,18 @@ function createItem() {
   if (random < 0.5) {
     itemImage.src = "./img/bug.png";
     itemImage.alt = "bug";
+    itemImage.addEventListener("click", () => {
+      console.log("게임졌다");
+      isWin = false;
+      showResult();
+    });
   } else {
     itemImage.src = "./img/carrot.png";
     itemImage.alt = "carrot";
+    itemImage.addEventListener("click", () => {
+      itemImage.remove();
+      checkWin();
+    });
   }
 
   const itemListRect = itemList.getBoundingClientRect();
@@ -98,6 +108,7 @@ function createItem() {
 function resetItems() {
   itemList.innerHTML = "";
   timer.textContent = remainingTime;
+  messageText.textContent = "Replay❓"; // 리플레이 메시지 초기화
 }
 
 function replayGame() {
@@ -110,4 +121,31 @@ function replayGame() {
   startTimer(); // 타이머 시작
   playBtn.innerHTML = `<i class="fa-solid fa-stop"></i>`; // 멈춤 아이콘으로 변경
   createItems(20); // 새로운 아이템 생성
+}
+
+function checkWin() {
+  const remainingCarrot = document.querySelectorAll(
+    '.item-img[src="./img/carrot.png"]'
+  ).length;
+
+  console.log("남은 당근 갯수", remainingCarrot);
+  if (remainingCarrot === 0) {
+    console.log("게임 이겼다!");
+    isWin = true;
+    showResult();
+
+    isPlay = false;
+    stopTimer();
+    playBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+    playBtn.disabled = true;
+  }
+}
+
+function showResult() {
+  if (isWin) {
+    messageText.textContent = "You Win🥇"; // 승리 메시지
+  } else {
+    messageText.textContent = "You Lost😮‍💨"; // 패배 메시지
+  }
+  showPopup(); // 팝업 표시
 }
