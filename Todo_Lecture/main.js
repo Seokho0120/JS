@@ -1,6 +1,13 @@
 const items = document.querySelector(".items");
+const form = document.querySelector(".new_form");
 const input = document.querySelector(".footer_input");
 const addBtn = document.querySelector(".footer_button");
+
+form.addEventListener("submit", (e) => {
+  // submit이 호출되면 브라우저가 자동으로 리로딩하기 때문에 등록한 item이 사라짐, 그래서 prevent해줘야함
+  e.preventDefault();
+  onAdd();
+});
 
 function onAdd() {
   // 1. 사용자가 입력한 텍스트를 받아옴
@@ -39,19 +46,6 @@ function createItem(text) {
   id++;
   return itemRow;
 }
-
-addBtn.addEventListener("click", () => {
-  onAdd();
-});
-
-input.addEventListener("keydown", (event) => {
-  // 글자가 만들어지고 있는중간에 발생하는 이벤트 막는거
-  if (e.isComposing) return;
-
-  if (event.key === "Enter") {
-    onAdd();
-  }
-});
 
 // 'i'가 여러개 있을 수 있기 때문에 id 활용
 // if (event.target.nodeName === "I") {
