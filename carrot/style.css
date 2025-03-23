@@ -1,0 +1,140 @@
+body {
+  overflow: hidden;
+}
+
+.audio-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+}
+
+.audio-controls button {
+  background-color: #f5d9a7;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.play-btn {
+  border-radius: 12px;
+  padding: 14px 30px;
+  background-color: #f5d9a7;
+  border: 3px solid black;
+  font-size: 24px;
+  transition: transform 300ms ease-in;
+}
+
+.timer {
+  width: 140px;
+  text-align: center;
+  font-size: 22px;
+  padding: 8px 12px;
+  border: 3px solid black;
+  border-radius: 12px;
+  background-color: white;
+}
+
+.carrot-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  background-color: #f1917a;
+  border: 3px solid black;
+  font-size: 24px;
+  padding: 30px;
+  width: 40px;
+  height: 40px;
+}
+
+.popup {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+
+  position: fixed;
+  bottom: 20%;
+  left: 0;
+  right: 0;
+  margin: 0 auto; /* 수평 중앙 정렬 */
+  max-width: 600px;
+
+  z-index: 3;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  gap: 18px;
+  padding: 10px 140px;
+  border-radius: 16px;
+}
+
+.popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup p {
+  font-size: 24px;
+  color: white;
+}
+
+.reset-btn {
+  border-radius: 12px;
+  padding: 14px 30px;
+  background-color: #f5d9a7;
+  border: 3px solid black;
+  font-size: 24px;
+  transition: transform 300ms ease-in;
+}
+
+.reset-btn:hover,
+.play-btn:hover {
+  transform: scale(1.1);
+}
+
+.items {
+  display: flex;
+  height: 100vh;
+}
+
+.items ul {
+  z-index: 1;
+}
+
+.items img {
+  max-width: 200px;
+  height: auto;
+}
+
+.backImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* 이미지 비율에 맞춰서 잘리도록 */
+  object-fit: cover;
+  z-index: 0;
+}

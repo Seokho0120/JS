@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://kit.fontawesome.com/b17d4fa9e7.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./main.js" defer></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 배경음악 컨트롤러 -->
+    <!-- <audio src="./sound/bg.mp3" class="bg-audio" controls loop></audio> -->
+    <div class="audio-controls">
+      <button id="playBtn">
+        <i class="fa-solid fa-play"></i>
+      </button>
+      <button id="pauseBtn">
+        <i class="fa-solid fa-pause"></i>
+      </button>
+      <button id="stopBtn">
+        <i class="fa-solid fa-stop"></i>
+      </button>
+      <!-- <i class="fa-solid fa-volume-high"></i>
+      <i class="fa-solid fa-volume-xmark"></i> -->
+    </div>
+
+    <div class="popup">
+      <button class="reset-btn">
+        <i class="fa-solid fa-arrow-rotate-right"></i>
+      </button>
+      <p class="win-messgae">Replay❓</p>
+      <p class="win-messgae">You Win🥇</p>
+      <p class="lose-messgae">You Lost😮‍💨</p>
+    </div>
+
+    <div class="container">
+      <button class="play-btn">
+        <i class="fa-solid fa-play"></i>
+      </button>
+      <input id="timeInput" class="timer" value="00:00" />
+      <div class="carrot-count">10</div>
+    </div>
+
+    <div class="items">
+      <ul>
+        <li>
+          <img src="./img/bug.png" alt="bug" />
+        </li>
+        <li>
+          <img src="./img/carrot.png" alt="carrot" />
+        </li>
+      </ul>
+    </div>
+
+    <img src="./img/background.png" alt="배경이미지" class="backImg" />
+  </body>
+</html>
