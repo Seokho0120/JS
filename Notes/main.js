@@ -80,6 +80,8 @@ function getNoteList() {
                 `;
 
     addBox.insertAdjacentHTML("afterend", liTag);
+    // https://sunshineyellow.tistory.com/94#element-insertAdjacentHTML-position%-C%--text-
+    // insertAdjacentHTML, appendChild 내용 참고하기
   });
 }
 getNoteList();
