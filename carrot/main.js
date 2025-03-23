@@ -14,7 +14,6 @@ const messageText = document.querySelector(".message-text");
 let isPlay = false;
 let remainingTime = 10; // 초기 시간
 let countdown = undefined;
-let isPopup = false;
 let isWin = false;
 
 playBtn.addEventListener("click", (e) => {
@@ -38,12 +37,12 @@ playBtn.addEventListener("click", (e) => {
 });
 
 function startTimer() {
-  timer.textContent = remainingTime;
+  timer.textContent = formatTime(remainingTime);
 
   countdown = setInterval(() => {
     if (remainingTime > 0) {
       remainingTime -= 1;
-      timer.textContent = remainingTime;
+      timer.textContent = formatTime(remainingTime);
     } else {
       clearInterval(countdown);
       showResult();
@@ -79,8 +78,8 @@ function createItem() {
     itemImage.src = "./img/bug.png";
     itemImage.alt = "bug";
     itemImage.addEventListener("click", () => {
-      console.log("게임졌다");
       isWin = false;
+      stopTimer();
       showResult();
     });
   } else {
@@ -107,8 +106,8 @@ function createItem() {
 
 function resetItems() {
   itemList.innerHTML = "";
-  timer.textContent = remainingTime;
-  messageText.textContent = "Replay❓"; // 리플레이 메시지 초기화
+  timer.textContent = formatTime(remainingTime);
+  messageText.textContent = "Replay❓";
 }
 
 function replayGame() {
@@ -116,11 +115,17 @@ function replayGame() {
   playBtn.disabled = false;
   isPlay = true; // 게임 상태 초기화
   remainingTime = 10; // 타이머 초기화
-  timer.textContent = remainingTime; // 타이머 표시 초기화
-  popup.classList.remove("show"); // 팝업 숨기기
-  startTimer(); // 타이머 시작
+  timer.textContent = formatTime(remainingTime);
+  popup.classList.remove("show");
+
+  startTimer();
   playBtn.innerHTML = `<i class="fa-solid fa-stop"></i>`; // 멈춤 아이콘으로 변경
-  createItems(20); // 새로운 아이템 생성
+  createItems(20);
+}
+
+function formatTime(timeInSeconds) {
+  const seconds = String(timeInSeconds % 60).padStart(2, "0");
+  return `00:${seconds}`; // "MM:SS" 형식으로 변경
 }
 
 function checkWin() {
@@ -130,7 +135,6 @@ function checkWin() {
 
   console.log("남은 당근 갯수", remainingCarrot);
   if (remainingCarrot === 0) {
-    console.log("게임 이겼다!");
     isWin = true;
     showResult();
 
@@ -143,9 +147,9 @@ function checkWin() {
 
 function showResult() {
   if (isWin) {
-    messageText.textContent = "You Win🥇"; // 승리 메시지
+    messageText.textContent = "You Win🥇";
   } else {
-    messageText.textContent = "You Lost😮‍💨"; // 패배 메시지
+    messageText.textContent = "You Lost😮‍💨";
   }
-  showPopup(); // 팝업 표시
+  showPopup();
 }
