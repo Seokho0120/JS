@@ -115,7 +115,7 @@ body {
   color: white;
 }
 
-.reset-btn {
+.replay-btn {
   border-radius: 12px;
   padding: 14px 30px;
   background-color: #f5d9a7;
@@ -124,7 +124,7 @@ body {
   transition: transform 300ms ease-in;
 }
 
-.reset-btn:hover,
+.replay-btn:hover,
 .play-btn:hover {
   transform: scale(1.1);
 }

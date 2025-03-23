@@ -7,10 +7,13 @@
 const playBtn = document.querySelector(".game-btn");
 const itemList = document.querySelector(".game-field");
 const timer = document.querySelector(".game-timer");
+const popup = document.querySelector(".popup");
+const replayBtn = document.querySelector(".replay-btn");
 
 let isPlay = false;
 let remainingTime = 10; // 초기 시간
 let countdown = undefined;
+let isPopup = false;
 
 playBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -24,15 +27,16 @@ playBtn.addEventListener("click", (e) => {
     startTimer();
   } else {
     // 게임멈춤
-    playBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
     isPlay = false;
     stopTimer();
+    playBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+    playBtn.disabled = true;
+
+    showPopup();
   }
 });
 
 function startTimer() {
-  console.log("시작");
-
   timer.textContent = remainingTime;
 
   countdown = setInterval(() => {
@@ -41,6 +45,7 @@ function startTimer() {
       timer.textContent = remainingTime;
     } else {
       clearInterval(countdown);
+      replayGame();
     }
   }, 1000);
 }
@@ -48,6 +53,14 @@ function startTimer() {
 function stopTimer() {
   clearInterval(countdown);
 }
+
+function showPopup() {
+  popup.classList.add("show");
+}
+
+replayBtn.addEventListener("click", () => {
+  replayGame();
+});
 
 function createItems(count) {
   for (let i = 0; i < count; i++) {
@@ -85,4 +98,16 @@ function createItem() {
 function resetItems() {
   itemList.innerHTML = "";
   timer.textContent = remainingTime;
+}
+
+function replayGame() {
+  resetItems(); // 아이템 초기화
+  playBtn.disabled = false;
+  isPlay = true; // 게임 상태 초기화
+  remainingTime = 10; // 타이머 초기화
+  timer.textContent = remainingTime; // 타이머 표시 초기화
+  popup.classList.remove("show"); // 팝업 숨기기
+  startTimer(); // 타이머 시작
+  playBtn.innerHTML = `<i class="fa-solid fa-stop"></i>`; // 멈춤 아이콘으로 변경
+  createItems(20); // 새로운 아이템 생성
 }
