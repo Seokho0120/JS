@@ -44,7 +44,10 @@ addBtn.addEventListener("click", () => {
   onAdd();
 });
 
-input.addEventListener("keypress", (event) => {
+input.addEventListener("keydown", (event) => {
+  // 글자가 만들어지고 있는중간에 발생하는 이벤트 막는거
+  if (e.isComposing) return;
+
   if (event.key === "Enter") {
     onAdd();
   }
