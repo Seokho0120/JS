@@ -10,11 +10,14 @@ const timer = document.querySelector(".game-timer");
 const popup = document.querySelector(".popup");
 const replayBtn = document.querySelector(".replay-btn");
 const messageText = document.querySelector(".message-text");
+const carrotCount = document.querySelector(".game-count");
+// TODO: carrotCount
 
 let isPlay = false;
 let remainingTime = 10; // 초기 시간
 let countdown = undefined;
 let isWin = false;
+let totalCarrots = 0;
 
 playBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -85,8 +88,14 @@ function createItem() {
   } else {
     itemImage.src = "./img/carrot.png";
     itemImage.alt = "carrot";
+    totalCarrots++;
+    carrotCount.textContent = totalCarrots;
+    console.log("carrotCount", carrotCount);
+
     itemImage.addEventListener("click", () => {
       itemImage.remove();
+      totalCarrots--;
+      carrotCount.textContent = totalCarrots;
       checkWin();
     });
   }
@@ -108,6 +117,9 @@ function resetItems() {
   itemList.innerHTML = "";
   timer.textContent = formatTime(remainingTime);
   messageText.textContent = "Replay❓";
+
+  totalCarrots = 0; // 초기화
+  carrotCount.textContent = totalCarrots; // UI에 초기 당근 수 표시
 }
 
 function replayGame() {
@@ -133,8 +145,9 @@ function checkWin() {
     '.item-img[src="./img/carrot.png"]'
   ).length;
 
-  console.log("남은 당근 갯수", remainingCarrot);
-  if (remainingCarrot === 0) {
+  // console.log("남은 당근 갯수", remainingCarrot);
+  // if (remainingCarrot === 0) {
+  if (totalCarrots === 0) {
     isWin = true;
     showResult();
 
