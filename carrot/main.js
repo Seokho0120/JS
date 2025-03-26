@@ -80,6 +80,7 @@ function createItem() {
   if (random < 0.5) {
     itemImage.src = "./img/bug.png";
     itemImage.alt = "bug";
+    // 테스트
     itemImage.addEventListener("click", () => {
       isWin = false;
       stopTimer();
