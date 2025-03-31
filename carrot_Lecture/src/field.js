@@ -2,7 +2,6 @@
 
 import * as sound from "./sound.js";
 
-const carrotSound = new Audio("./sound/carrot_pull.mp3");
 const CARROT_SIZE = 80;
 
 export default class Field {
