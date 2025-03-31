@@ -9,8 +9,6 @@ export const Reason = Object.freeze({
   cancel: "cancel",
 });
 
-// export default class GameBuilder {
-// export할게 하나만 있는게 아니기 때문에 default 삭제
 export class GameBuilder {
   gameDuration(duration) {
     this.gameDuration = duration;
@@ -43,7 +41,7 @@ class Game {
     this.gameBtn = document.querySelector(".game_button");
     this.gameBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
       }
@@ -70,26 +68,12 @@ class Game {
     sound.playBackGround();
   }
 
-  stop() {
+  stop(reason) {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    sound.playAlert();
     sound.stopBackGround();
-    this.onGameStop && this.onGameStop(Reason.cancel);
-  }
-
-  finish(win) {
-    this.started = false;
-    this.hideGameButton();
-    if (win) {
-      sound.playWin();
-    } else {
-      sound.playBug();
-    }
-    this.stopGameTimer();
-    sound.stopBackGround();
-    this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
+    this.onGameStop && this.onGameStop(reason);
   }
 
   onItemClick = (item) => {
@@ -99,10 +83,10 @@ class Game {
       this.score++;
       this.updateScoreBoard();
       if (this.score === this.carrotCount) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "bug") {
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   };
 
@@ -128,7 +112,7 @@ class Game {
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
         clearInterval(this.timer);
-        this.finish(this.carrotCount === this.score);
+        this.stop(this.carrotCount === this.score ? Reason.win : Reason.lose);
         return;
       }
       this.updateTimerText(--remainingTimeSec);
