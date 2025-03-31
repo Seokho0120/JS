@@ -3,7 +3,15 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class GameBuilder {
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  cancel: "cancel",
+});
+
+// export default class GameBuilder {
+// export할게 하나만 있는게 아니기 때문에 default 삭제
+export class GameBuilder {
   gameDuration(duration) {
     this.gameDuration = duration;
     return this;
@@ -68,7 +76,7 @@ class Game {
     this.hideGameButton();
     sound.playAlert();
     sound.stopBackGround();
-    this.onGameStop && this.onGameStop("cancel");
+    this.onGameStop && this.onGameStop(Reason.cancel);
   }
 
   finish(win) {
@@ -81,7 +89,7 @@ class Game {
     }
     this.stopGameTimer();
     sound.stopBackGround();
-    this.onGameStop && this.onGameStop(win ? "win" : "lose");
+    this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
   }
 
   onItemClick = (item) => {
